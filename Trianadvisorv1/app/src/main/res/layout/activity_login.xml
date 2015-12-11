@@ -8,6 +8,38 @@
     android:background="@drawable/fondologin1"
     tools:context="com.dam.salesianostriana.di.trianadvisorv1.LoginActivity">
 
-    
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageView2"
+        android:src="@drawable/logotransconletra"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/usuario"
+        android:hint="Usuario"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pass"
+        android:hint="Contraseña"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/usuario"
+        android:layout_alignLeft="@+id/usuario"
+        android:layout_alignStart="@+id/usuario" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_below="@+id/pass"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
