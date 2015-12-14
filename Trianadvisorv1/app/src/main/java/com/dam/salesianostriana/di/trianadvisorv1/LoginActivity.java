@@ -17,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //getSupportActionBar().hide();
+        //getSupportActionBar().hide(); Si la dejo puesta da error de version support v7
 
         user = (EditText) findViewById(R.id.usuario);
         pass = (EditText) findViewById(R.id.pass);
