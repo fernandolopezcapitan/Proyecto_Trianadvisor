@@ -21,25 +21,45 @@
         android:layout_height="wrap_content"
         android:id="@+id/usuario"
         android:hint="Usuario"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="#ffffff" />
+        android:textSize="25dp"
+        android:textColor="#1A100E"
+        android:background="#ffcc79"
+        android:layout_marginBottom="15dp"
+        android:layout_above="@+id/pass"
+        android:layout_alignLeft="@+id/imageView2"
+        android:layout_alignStart="@+id/imageView2"
+        android:layout_alignRight="@+id/imageView2"
+        android:layout_alignEnd="@+id/imageView2"
+        android:gravity="center_horizontal" />
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pass"
         android:hint="Contraseña"
-        android:textColor="#ffffff"
-        android:layout_below="@+id/usuario"
+        android:textSize="25dp"
+        android:textColor="#1A100E"
+        android:background="#ffcc79"
+        android:layout_above="@+id/btn_entrar"
+        android:layout_marginBottom="15dp"
         android:layout_alignLeft="@+id/usuario"
-        android:layout_alignStart="@+id/usuario" />
+        android:layout_alignStart="@+id/usuario"
+        android:layout_alignRight="@+id/usuario"
+        android:layout_alignEnd="@+id/usuario"
+        android:gravity="center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_below="@+id/pass"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="40dp"
+        android:text="Entrar"
+        android:id="@+id/btn_entrar"
+        android:textSize="20dp"
+        android:textColor="#d25400"
+        android:background="#ffcc79"
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold"
+        android:layout_alignLeft="@+id/pass"
+        android:layout_alignStart="@+id/pass"
+        android:layout_alignRight="@+id/pass"
+        android:layout_alignEnd="@+id/pass" />
 
 </RelativeLayout>
