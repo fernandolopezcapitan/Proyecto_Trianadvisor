@@ -8,7 +8,63 @@
     android:layout_height="match_parent"
     tools:context="com.dam.salesianostriana.di.trianadvisorv1.ScrollingActivity">
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin" android:text="@string/large_text" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/text_margin">
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:numStars="5"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Categoría"
+            android:id="@+id/tv_categoria_scroll"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Dirección"
+            android:id="@+id/tv_direcc_scroll"
+            android:textStyle="italic"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Teléfono"
+            android:id="@+id/tv_tlf_scroll"
+            android:textStyle="italic"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Descripción"
+            android:id="@+id/tv_descripcion_scroll" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Valoraciones"
+            android:id="@+id/tv_valoraciones_scroll"
+            android:layout_gravity="center_horizontal" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
+            android:background="@android:color/holo_red_dark"/>
+
+    </LinearLayout>
+
 
 </android.support.v4.widget.NestedScrollView>

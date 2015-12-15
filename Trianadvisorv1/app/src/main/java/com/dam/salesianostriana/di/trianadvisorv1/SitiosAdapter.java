@@ -1,5 +1,7 @@
 package com.dam.salesianostriana.di.trianadvisorv1;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +21,12 @@ public class SitiosAdapter extends RecyclerView.Adapter<SitiosAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nombre, categoria, direccion, telefono;
         public ImageView foto;
+        public View mView;
+
 
         public ViewHolder(View v) {
             super (v);
+            mView = v;
             nombre = (TextView) v.findViewById(R.id.tv_nombre_sitio);
             categoria = (TextView) v.findViewById(R.id.tv_categoria_sitio);
             direccion = (TextView) v.findViewById(R.id.tv_direcc_sitio);
@@ -48,6 +53,16 @@ public class SitiosAdapter extends RecyclerView.Adapter<SitiosAdapter.ViewHolder
         holder.direccion.setText(mDataset.get(position).getDireccion());
         holder.telefono.setText(mDataset.get(position).getTelefono());
         holder.foto.setImageResource(mDataset.get(position).getFoto());
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+
+                Intent i = new Intent(context,ScrollingActivity.class);
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override

@@ -15,8 +15,17 @@
             android:fitsSystemWindows="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="15dp"
+            app:collapsedTitleGravity="center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:contentScrim="?attr/colorPrimary">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/logoconletra"
+                android:id="@+id/img_logo_scroll"/>
 
             <android.support.v7.widget.Toolbar android:id="@+id/toolbar"
                 android:layout_height="?attr/actionBarSize" android:layout_width="match_parent"
