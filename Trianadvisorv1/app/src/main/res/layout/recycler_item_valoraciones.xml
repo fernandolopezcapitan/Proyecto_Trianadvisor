@@ -33,18 +33,29 @@
                 android:orientation="vertical"
                 android:weightSum="3"
                 android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Usuario"
-                    android:id="@+id/tv_usuario_valoraciones" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Usuario"
+                        android:id="@+id/tv_usuario_valoraciones"
+                        android:layout_weight="1"/>
 
-                <!--<RatingBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:numStars="5"/>-->
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:rating="3.5"
+                        style="@style/foodRatingBar"
+                        android:layout_gravity="right" />
+
+                </LinearLayout>
+
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

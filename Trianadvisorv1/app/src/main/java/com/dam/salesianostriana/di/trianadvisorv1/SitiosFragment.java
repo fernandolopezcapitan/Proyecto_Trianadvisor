@@ -9,7 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
+import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Sitios;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 
 /**
@@ -20,7 +30,7 @@ public class SitiosFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<ItemSitios> sitios;
+    private List<Result> listadoSitios;
 
     public SitiosFragment() {
         // Required empty public constructor
@@ -37,15 +47,58 @@ public class SitiosFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        sitios = new ArrayList();
-        sitios.add(new ItemSitios("La esquinita","c/ Pagés del Corro, 12","Tapeo", "955444333",R.drawable.logoconletra));
-        sitios.add(new ItemSitios("Bodega Santa Ana","c/ Miño, 8","Desayuños", "955221113",R.drawable.logoconletra));
-        sitios.add(new ItemSitios("Bar Paletas","c/ Evangelista, 34","Desayunos", "955000666",R.drawable.logoconletra));
-        sitios.add(new ItemSitios("Monte Fuji","c/ Salado, 59","Restaurante japonés", "954999333",R.drawable.logoconletra));
-        mAdapter = new SitiosAdapter(sitios);
-        mRecyclerView.setAdapter(mAdapter);
+
+
+
+        listadoSitios = new ArrayList();
+        /*
+        listadoSitios.add(new ItemSitios("La esquinita", "c/ Pagés del Corro, 12", "Tapeo", "955444333", R.drawable.logoconletra));
+        listadoSitios.add(new ItemSitios("Bodega Santa Ana", "c/ Miño, 8", "Desayuños", "955221113", R.drawable.logoconletra));
+        listadoSitios.add(new ItemSitios("Bar Paletas", "c/ Evangelista, 34", "Desayunos", "955000666", R.drawable.logoconletra));
+        listadoSitios.add(new ItemSitios("Monte Fuji", "c/ Salado, 59", "Restaurante japonés", "954999333", R.drawable.logoconletra));
+        mAdapter = new SitiosAdapter(listadoSitios);
+        mRecyclerView.setAdapter(mAdapter);*/
+
+        loadData();
 
         return view;
+
+    }
+
+    private Api makeService(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.parse.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Api service = retrofit.create(Api.class);
+        return service;
+    }
+
+    private void loadData(){
+        final Call<Sitios> sitiosCall = makeService().obtenerSitios();
+        sitiosCall.enqueue(new Callback<Sitios>() {
+            @Override
+            public void onResponse(Response<Sitios> response, Retrofit retrofit) {
+                Sitios result = response.body();
+
+                for(int i=0;i<result.getResults().size();i++){
+                    listadoSitios.add(new Result(
+                            result.getResults().get(i).getObjectId(),
+                            result.getResults().get(i).getNombre(),
+                            result.getResults().get(i).getTelefono(),
+                            result.getResults().get(i).getFoto(),
+                            result.getResults().get(i).getCategoria(),
+                            result.getResults().get(i).getDireccion()));
+                }
+                mRecyclerView.setAdapter(new SitiosAdapter(listadoSitios));
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
 
     }
 

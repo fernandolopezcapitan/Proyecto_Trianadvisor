@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/pass"
         android:hint="Contraseña"
+        android:inputType="textPassword"
         android:textColor="#1A100E"
         android:background="#ffcc79"
         android:layout_above="@+id/btn_entrar"
@@ -44,6 +45,7 @@
         android:layout_alignRight="@+id/usuario"
         android:layout_alignEnd="@+id/usuario"
         android:gravity="center_horizontal" />
+
 
     <Button
         android:layout_width="wrap_content"
