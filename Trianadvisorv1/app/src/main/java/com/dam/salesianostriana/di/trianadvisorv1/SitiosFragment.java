@@ -59,7 +59,7 @@ public class SitiosFragment extends Fragment {
         mAdapter = new SitiosAdapter(listadoSitios);
         mRecyclerView.setAdapter(mAdapter);*/
 
-        loadData();
+        loadDataSitios();
 
         return view;
 
@@ -74,7 +74,7 @@ public class SitiosFragment extends Fragment {
         return service;
     }
 
-    private void loadData(){
+    private void loadDataSitios(){
         final Call<Sitios> sitiosCall = makeService().obtenerSitios();
         sitiosCall.enqueue(new Callback<Sitios>() {
             @Override
@@ -82,13 +82,16 @@ public class SitiosFragment extends Fragment {
                 Sitios result = response.body();
 
                 for(int i=0;i<result.getResults().size();i++){
-                    listadoSitios.add(new Result(
-                            result.getResults().get(i).getObjectId(),
-                            result.getResults().get(i).getNombre(),
-                            result.getResults().get(i).getTelefono(),
-                            result.getResults().get(i).getFoto(),
-                            result.getResults().get(i).getCategoria(),
-                            result.getResults().get(i).getDireccion()));
+                    if(result.getResults().get(i).getNombre()!=null){
+                        listadoSitios.add(new Result(
+                                result.getResults().get(i).getObjectId(),
+                                result.getResults().get(i).getNombre(),
+                                result.getResults().get(i).getTelefono(),
+                                result.getResults().get(i).getFoto(),
+                                result.getResults().get(i).getCategoria(),
+                                result.getResults().get(i).getDireccion()));
+                    }
+
                 }
                 mRecyclerView.setAdapter(new SitiosAdapter(listadoSitios));
 

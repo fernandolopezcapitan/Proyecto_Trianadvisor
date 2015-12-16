@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,7 +52,7 @@ public class SitiosAdapter extends RecyclerView.Adapter<SitiosAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(SitiosAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(SitiosAdapter.ViewHolder holder, final int position) {
 
         holder.nombre.setText(mDataset.get(position).getNombre());
         holder.categoria.setText(mDataset.get(position).getCategoria());
@@ -67,6 +66,8 @@ public class SitiosAdapter extends RecyclerView.Adapter<SitiosAdapter.ViewHolder
             public void onClick(View v) {
 
                 Intent i = new Intent(context,ScrollingActivity.class);
+                String objectId = mDataset.get(position).getObjectId();
+                i.putExtra("objectId",objectId);
                 context.startActivity(i);
             }
         });

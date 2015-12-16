@@ -1,32 +1,31 @@
-package com.dam.salesianostriana.di.trianadvisorv1.pojoschema;
+package com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoValoraciones;
 
-/**
- * Created by flopez on 15/12/2015.
- */
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sitios {
-
+/**
+ * Created by flopez on 16/12/2015.
+ */
+public class Valoraciones {
     @SerializedName("results")
     @Expose
-    private List<Result> results = new ArrayList<Result>();
+    private List<ResultValoraciones> results = new ArrayList<ResultValoraciones>();
 
     /**
      * No args constructor for use in serialization
      *
      */
-    public Sitios() {
+    public Valoraciones() {
     }
 
     /**
      *
      * @param results
      */
-    public Sitios(List<Result> results) {
+    public Valoraciones(List<ResultValoraciones> results) {
         this.results = results;
     }
 
@@ -35,7 +34,7 @@ public class Sitios {
      * @return
      * The results
      */
-    public List<Result> getResults() {
+    public List<ResultValoraciones> getResults() {
         return results;
     }
 
@@ -44,7 +43,7 @@ public class Sitios {
      * @param results
      * The results
      */
-    public void setResults(List<Result> results) {
+    public void setResults(List<ResultValoraciones> results) {
         this.results = results;
     }
 

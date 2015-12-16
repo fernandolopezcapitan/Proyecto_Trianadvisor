@@ -24,7 +24,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginRight="15dp"
-                android:id="@+id/foto_sitio"
+                android:id="@+id/foto_user"
                 android:src="@drawable/logoconletra"/>
 
             <LinearLayout
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Comentarios"
-                    android:id="@+id/tv_tlf_sitio"
+                    android:id="@+id/tv_comentarios_valoraciones"
                     android:textStyle="italic" />
             </LinearLayout>
 
