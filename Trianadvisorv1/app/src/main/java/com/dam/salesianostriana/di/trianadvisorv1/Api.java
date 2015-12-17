@@ -4,6 +4,8 @@ import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Comentario;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Login;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Sitios;
+import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoBares.Bares;
+import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoValoracion.Valoracion;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoValoraciones.Valoraciones;
 
 import retrofit.Call;
@@ -35,8 +37,8 @@ public interface Api {
     @GET("/1/classes/sitio/{objectId}")
     Call<Result> obtenerDatosSitio(@Path("objectId") String objectId);
 
-    @GET("/1/classes/valoracion")
-    Call<Valoraciones> obtenerValoracionesSitio(@Query("objectId") String objectId);
+    @GET("/1/classes/valoracion?")
+    Call<Valoracion> obtenerValoracionesSitio(@Query("objectId") String objectId);
 
     @GET("/1/classes/comentario?include=usuario")
     Call<Comentario> obtenerComentariosSitio(@Query("objectId") String objectId);
@@ -47,6 +49,9 @@ public interface Api {
     //Call<Comentario> obtenerComentariosSitio(@Query("where") String where, @Query("objectId") String objectId);
 
     //@GET("/1/classes/sitio")
+
+    @GET("/1/classes/sitio?limit=10")
+    Call<Bares> irdetapas(@Query("latitude") double latitud,@Query("longitude") double longitud);
 
 
 }
