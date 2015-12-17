@@ -54,4 +54,6 @@ public interface Api {
     Call<Bares> irdetapas(@Query("latitude") double latitud,@Query("longitude") double longitud);
 
 
+
+
 }

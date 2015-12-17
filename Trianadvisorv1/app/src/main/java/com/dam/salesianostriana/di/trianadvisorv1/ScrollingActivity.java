@@ -3,7 +3,6 @@ package com.dam.salesianostriana.di.trianadvisorv1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +11,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Comentario;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
+import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoValoracion.Valoracion;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -72,8 +73,7 @@ public class ScrollingActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast.makeText(ScrollingActivity.this, "Comenta tu experiencia", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(ScrollingActivity.this, EnviarcomentariosActivity.class);
                 startActivity(i);
             }
@@ -94,6 +94,8 @@ public class ScrollingActivity extends AppCompatActivity {
                 tlf.setText(result.getTelefono());
                 descripcion.setText(result.getDescripcion());
                 Picasso.with(ScrollingActivity.this).load(result.getFoto().getUrl()).fit().placeholder(R.drawable.fondologin1).into(imgBar);
+
+                loadDataValoracionesSitio(objectId);
             }
 
             @Override
@@ -129,5 +131,30 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
 
+    }
+    private void loadDataValoracionesSitio(final String objectId){
+
+        final Call<Valoracion> valoracionCall = Utiles.makeServiceWithInterceptors().obtenerValoracionesSitio(objectId);
+        valoracionCall.enqueue(new Callback<Valoracion>() {
+            @Override
+            public void onResponse(Response<Valoracion> response, Retrofit retrofit) {
+                Valoracion valoracion = response.body();
+
+                float mediaValoraciones = 0;
+                if (valoracion != null) {
+                    for (int i = 0; i < valoracion.getResults().size(); i++) {
+                        mediaValoraciones += valoracion.getResults().get(i).getValoracion();
+                    }
+                    mediaValoraciones = mediaValoraciones / valoracion.getResults().size();
+                }
+                rating.setRating(mediaValoraciones);
+                rating.setIsIndicator(true);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
 }

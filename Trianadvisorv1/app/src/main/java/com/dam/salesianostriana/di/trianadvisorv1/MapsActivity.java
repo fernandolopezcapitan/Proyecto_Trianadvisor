@@ -34,7 +34,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleApiClient mGoogleApiClient = null;
     private Map<Marker, Result> allMarkersMap = new HashMap<Marker, Result>();
     private Location mCurrentLocation;
-    float mediaValoraciones = 0;
 
 
     @Override
@@ -69,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         loadDataBaresCercanos(dondeEstoy.latitude, dondeEstoy.longitude);
 
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        mMap.setInfoWindowAdapter(new PopupAdapter(MapsActivity.this, getLayoutInflater(), allMarkersMap, mediaValoraciones));
+        //mMap.setInfoWindowAdapter(new PopupAdapter(MapsActivity.this, getLayoutInflater(), allMarkersMap, mediaValoraciones));
     }
 
 
@@ -95,7 +94,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Marker marcadorBar = mMap.addMarker(new MarkerOptions().position(coordenadasBar).title(nombreBar));
                         marcadorBar.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_mapabar60));
 
-
                         allMarkersMap.put(marcadorBar, new Result(objectIdBar, nombreBar, direccionBar, fotoBar));
                         loadDataValoracionesSitio(objectIdBar);
                     }
@@ -118,12 +116,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onResponse(Response<Valoracion> response, Retrofit retrofit) {
                 Valoracion valoracion = response.body();
 
+                float mediaValoraciones = 0;
                 if (valoracion != null) {
                     for (int i = 0; i < valoracion.getResults().size(); i++) {
                         mediaValoraciones += valoracion.getResults().get(i).getValoracion();
                     }
                     mediaValoraciones = mediaValoraciones / valoracion.getResults().size();
                 }
+                mMap.setInfoWindowAdapter(new PopupAdapter(MapsActivity.this, getLayoutInflater(), allMarkersMap, mediaValoraciones));
+
             }
 
             @Override

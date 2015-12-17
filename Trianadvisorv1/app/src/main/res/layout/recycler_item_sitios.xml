@@ -58,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Teléfono"
+                    android:layout_marginRight="10dp"
                     android:id="@+id/tv_tlf_sitio"
                     android:textStyle="italic" />
             </LinearLayout>
