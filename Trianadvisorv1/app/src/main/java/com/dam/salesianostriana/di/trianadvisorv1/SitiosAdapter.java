@@ -59,7 +59,7 @@ public class SitiosAdapter extends RecyclerView.Adapter<SitiosAdapter.ViewHolder
         holder.direccion.setText(mDataset.get(position).getDireccion());
         holder.telefono.setText(mDataset.get(position).getTelefono());
         Picasso.with(context).load(mDataset.get(position).getFoto().getUrl()).fit().placeholder(R.drawable.logoconletra)
-                .into(holder.foto);
+               .into(holder.foto);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

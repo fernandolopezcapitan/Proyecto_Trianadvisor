@@ -8,6 +8,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class Result {
 
+    @SerializedName("fecha")
+    @Expose
+    private Fecha fecha;
+    @SerializedName("comentario")
+    @Expose
+    private String comentario;
     @SerializedName("categoria")
     @Expose
     private String categoria;
@@ -38,6 +44,12 @@ public class Result {
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
+    @SerializedName("sitio")
+    @Expose
+    private Sitio sitio;
+    @SerializedName("usuario")
+    @Expose
+    private Login login;
 
     /**
      * No args constructor for use in serialization
@@ -46,19 +58,23 @@ public class Result {
     public Result() {
     }
 
-    /**
-     *
-     * @param updatedAt
-     * @param nombre
-     * @param direccion
-     * @param categoria
-     * @param objectId
-     * @param createdAt
-     * @param coordenadas
-     * @param telefono
-     * @param descripcion
-     * @param foto
-     */
+    public Result(Fecha fecha, String comentario, Foto foto, String nombre) {
+        this.fecha = fecha;
+        this.comentario = comentario;
+        this.foto = foto;
+        this.nombre = nombre;
+    }
+
+    public Result(String comentario, String createdAt, Fecha fecha, String objectId, Sitio sitio, String updatedAt, Login login) {
+        this.comentario = comentario;
+        this.createdAt = createdAt;
+        this.fecha = fecha;
+        this.objectId = objectId;
+        this.sitio = sitio;
+        this.updatedAt = updatedAt;
+        this.login = login;
+    }
+
     public Result(String categoria, Coordenadas coordenadas, String createdAt, String descripcion, String direccion, Foto foto, String nombre, String objectId, String telefono, String updatedAt) {
         this.categoria = categoria;
         this.coordenadas = coordenadas;
@@ -79,6 +95,23 @@ public class Result {
         this.foto = foto;
         this.categoria = categoria;
         this.direccion = direccion;
+    }
+    /**
+     *
+     * @return
+     * The comentario
+     */
+    public String getComentario() {
+        return comentario;
+    }
+
+    /**
+     *
+     * @param comentario
+     * The comentario
+     */
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
 
     /**
@@ -260,5 +293,58 @@ public class Result {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+    /**
+     *
+     * @return
+     * The fecha
+     */
+    public Fecha getFecha() {
+        return fecha;
+    }
+
+    /**
+     *
+     * @param fecha
+     * The fecha
+     */
+    public void setFecha(Fecha fecha) {
+        this.fecha = fecha;
+    }
+    /**
+     *
+     * @return
+     * The sitio
+     */
+    public Sitio getSitio() {
+        return sitio;
+    }
+
+    /**
+     *
+     * @param sitio
+     * The sitio
+     */
+    public void setSitio(Sitio sitio) {
+        this.sitio = sitio;
+    }
+    /**
+     *
+     * @return
+     * The usuario
+     */
+    public Login getLogin() {
+        return login;
+    }
+
+    /**
+     *
+     * @param login
+     * The usuario
+     */
+    public void setLogin(Login login) {
+        this.login = login;
+    }
+
+
 
 }

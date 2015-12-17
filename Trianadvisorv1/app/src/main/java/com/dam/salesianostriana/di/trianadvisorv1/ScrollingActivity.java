@@ -5,14 +5,20 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Comentario;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -25,6 +31,12 @@ public class ScrollingActivity extends AppCompatActivity {
     TextView categoria, direccion, tlf, descripcion;
     Toolbar toolbar;
     ImageView imgBar;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private List<Result> listadoComentarios;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +58,15 @@ public class ScrollingActivity extends AppCompatActivity {
         }
 
         loadDataSitios(objectId);
+
+        //Carga del recycler de comentarios
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(ScrollingActivity.this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        listadoComentarios = new ArrayList();
+
+        //loadDataComentarios(objectId);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,5 +101,33 @@ public class ScrollingActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void loadDataComentarios(final String objectId){
+        final Call<Comentario> comentariosCall = Utiles.makeServiceWithInterceptors().obtenerComentariosSitio(objectId);
+        comentariosCall.enqueue(new Callback<Comentario>() {
+            @Override
+            public void onResponse(Response<Comentario> response, Retrofit retrofit) {
+                Comentario result = response.body();
+
+                for (int i = 0;i<result.getResults().size();i++){
+                    if (result.getResults().get(i).getObjectId()!= null){
+                        listadoComentarios.add(new Result(
+                                result.getResults().get(i).getFecha(),
+                                result.getResults().get(i).getComentario(),
+                                result.getResults().get(i).getFoto(),
+                                result.getResults().get(i).getNombre()));
+                    }
+                }
+                mRecyclerView.setAdapter(new SitiosAdapter(listadoComentarios));
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+
+
+
     }
 }

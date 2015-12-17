@@ -1,5 +1,6 @@
 package com.dam.salesianostriana.di.trianadvisorv1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -117,9 +118,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.bares_registrados) {
             f = new SitiosFragment();
         } else if (id == R.id.ir_de_tapas) {
-            //Intent i = new Intent(MainActivity.this, MapsActivity.class);
-            //startActivity(i);
+            Intent i = new Intent(MainActivity.this, MapsActivity.class);
+            startActivity(i);
             mensaje = "Mapas";
+            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_cerrar_sesion) {
             mensaje = "Cerrar sesión";
             Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();

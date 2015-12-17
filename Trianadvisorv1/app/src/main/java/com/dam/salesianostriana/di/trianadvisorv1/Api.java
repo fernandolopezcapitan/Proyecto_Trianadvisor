@@ -1,5 +1,6 @@
 package com.dam.salesianostriana.di.trianadvisorv1;
 
+import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Comentario;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Login;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Sitios;
@@ -34,8 +35,18 @@ public interface Api {
     @GET("/1/classes/sitio/{objectId}")
     Call<Result> obtenerDatosSitio(@Path("objectId") String objectId);
 
-    @GET("/1/classes/valoracion?&include=usuario")
+    @GET("/1/classes/valoracion")
     Call<Valoraciones> obtenerValoracionesSitio(@Query("objectId") String objectId);
+
+    @GET("/1/classes/comentario?include=usuario")
+    Call<Comentario> obtenerComentariosSitio(@Query("objectId") String objectId);
+
+    //Si las variables tiene problemas de nombre, ej:
+
+    //en where tenems q pasarle un string, ese string te lo da String gson.toJSON(clase q te da los pojo, ver los datos q producen todas las valoraciones de un sitio)
+    //Call<Comentario> obtenerComentariosSitio(@Query("where") String where, @Query("objectId") String objectId);
+
+    //@GET("/1/classes/sitio")
 
 
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoValoraciones.ResultValoraciones;
+import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class ComentariosAdapter extends RecyclerView.Adapter<ComentariosAdapter.ViewHolder>{
     Context context;
-    private List<ResultValoraciones> mDataset;
+    private List<Result> mDataset;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView usuario, fecha, comentarios;
@@ -32,7 +32,7 @@ public class ComentariosAdapter extends RecyclerView.Adapter<ComentariosAdapter.
 
         }
     }
-    public ComentariosAdapter(List<ResultValoraciones> myDataset) {mDataset = myDataset;}
+    public ComentariosAdapter(List<Result> myDataset) {mDataset = myDataset;}
 
     @Override
     public ComentariosAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -45,9 +45,10 @@ public class ComentariosAdapter extends RecyclerView.Adapter<ComentariosAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.usuario.setText(mDataset.get(position).getUsuario().getNombre());
+        holder.usuario.setText(mDataset.get(position).getNombre());
         holder.fecha.setText(mDataset.get(position).getCreatedAt());
-        //holder.comentarios.setText(mDataset.get(position).);
+        holder.comentarios.setText(mDataset.get(position).getComentario());
+        //Picasso.with(context).load(mDataset.get(position).getFoto().getUrl()).fit().placeholder(R.drawable.logoconletra).into(holder.foto);
 
     }
 
