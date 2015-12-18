@@ -5,6 +5,8 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
@@ -44,8 +46,17 @@ public class Utiles {
         return service;
     }
 
+    public static String codificarEnUtf8(String datoAcodificar) {
+        String encodedData = "";
 
+        try {
+            encodedData = URLEncoder.encode(datoAcodificar, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
 
+        }
+        return encodedData;
+    }
 
 
 }

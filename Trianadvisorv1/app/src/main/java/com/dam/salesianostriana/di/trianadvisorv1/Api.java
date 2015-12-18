@@ -6,7 +6,6 @@ import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Sitios;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoBares.Bares;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoValoracion.Valoracion;
-import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoValoraciones.Valoraciones;
 
 import retrofit.Call;
 import retrofit.http.GET;
@@ -38,7 +37,7 @@ public interface Api {
     Call<Result> obtenerDatosSitio(@Path("objectId") String objectId);
 
     @GET("/1/classes/valoracion?")
-    Call<Valoracion> obtenerValoracionesSitio(@Query("objectId") String objectId);
+    Call<Valoracion> obtenerValoracionesSitio(@Query(value = "where", encoded = true) String where);
 
     @GET("/1/classes/comentario?include=usuario")
     Call<Comentario> obtenerComentariosSitio(@Query("objectId") String objectId);

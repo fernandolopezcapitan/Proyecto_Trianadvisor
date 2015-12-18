@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -32,6 +33,7 @@ public class ScrollingActivity extends AppCompatActivity {
     TextView categoria, direccion, tlf, descripcion;
     Toolbar toolbar;
     ImageView imgBar;
+    int error;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -130,30 +132,48 @@ public class ScrollingActivity extends AppCompatActivity {
         });
 
 
-
     }
     private void loadDataValoracionesSitio(final String objectId){
 
-        final Call<Valoracion> valoracionCall = Utiles.makeServiceWithInterceptors().obtenerValoracionesSitio(objectId);
+        String consulta ="{\"sitio\": { \"__type\": \"Pointer\", \"className\": \"sitio\", \"objectId\": \""+objectId+"\" } }";
+
+        consulta = Utiles.codificarEnUtf8(consulta);
+
+        final Call<Valoracion> valoracionCall = Utiles.makeServiceWithInterceptors().obtenerValoracionesSitio(consulta);
         valoracionCall.enqueue(new Callback<Valoracion>() {
             @Override
             public void onResponse(Response<Valoracion> response, Retrofit retrofit) {
                 Valoracion valoracion = response.body();
 
-                float mediaValoraciones = 0;
-                if (valoracion != null) {
-                    for (int i = 0; i < valoracion.getResults().size(); i++) {
-                        mediaValoraciones += valoracion.getResults().get(i).getValoracion();
+                error = response.code();
+
+                Log.i("fallo", String.valueOf(error));
+
+                String cadena = String.valueOf(error);
+                String primer_numero = cadena.substring(0, 1);
+                int formateado = Integer.parseInt(primer_numero);
+
+                if(formateado == 2){
+                    float mediaValoraciones = 0;
+                    if (valoracion != null) {
+
+                        for (int i = 0; i < valoracion.getResults().size(); i++) {
+                            if(valoracion.getResults().get(i).getValoracion()!= null)
+                                mediaValoraciones = valoracion.getResults().get(i).getValoracion() + mediaValoraciones;
+                        }
+                        mediaValoraciones = mediaValoraciones / valoracion.getResults().size();
                     }
-                    mediaValoraciones = mediaValoraciones / valoracion.getResults().size();
+                    rating.setRating(mediaValoraciones);
+                    rating.setIsIndicator(true);
+                } else {
+                    Toast.makeText(ScrollingActivity.this, "Hemos detectado un error. Estamos trabajando para solucionarlo", Toast.LENGTH_SHORT).show();
                 }
-                rating.setRating(mediaValoraciones);
-                rating.setIsIndicator(true);
+
             }
 
             @Override
             public void onFailure(Throwable t) {
-
+                Toast.makeText(ScrollingActivity.this, "Error en la URL", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,15 +1,15 @@
 package com.dam.salesianostriana.di.trianadvisorv1;
 
 import android.location.Location;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoBares.Bares;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoBares.Foto;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoBares.Result;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.pojoValoracion.Valoracion;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -18,7 +18,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.okhttp.internal.Util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +33,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleApiClient mGoogleApiClient = null;
     private Map<Marker, Result> allMarkersMap = new HashMap<Marker, Result>();
     private Location mCurrentLocation;
+    int error;
 
 
     @Override
@@ -116,10 +116,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onResponse(Response<Valoracion> response, Retrofit retrofit) {
                 Valoracion valoracion = response.body();
 
+                error = response.code();
+
+                /*String cadena = String.valueOf(error);
+                String primer_numero = cadena.substring(0, 1);
+                int formateado = Integer.parseInt(primer_numero);*/
+
+                Log.i("fallo",String.valueOf(error));
+
                 float mediaValoraciones = 0;
                 if (valoracion != null) {
                     for (int i = 0; i < valoracion.getResults().size(); i++) {
-                        mediaValoraciones += valoracion.getResults().get(i).getValoracion();
+                        if(valoracion.getResults().get(i).getValoracion()!= null)
+                            mediaValoraciones = valoracion.getResults().get(i).getValoracion() + mediaValoraciones;
                     }
                     mediaValoraciones = mediaValoraciones / valoracion.getResults().size();
                 }
