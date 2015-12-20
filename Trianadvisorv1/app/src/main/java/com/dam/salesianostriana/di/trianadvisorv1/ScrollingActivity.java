@@ -106,7 +106,7 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         });
     }
-    private void loadDataComentarios(final String objectId){
+    /*private void loadDataComentarios(final String objectId){
         final Call<Comentario> comentariosCall = Utiles.makeServiceWithInterceptors().obtenerComentariosSitio(objectId);
         comentariosCall.enqueue(new Callback<Comentario>() {
             @Override
@@ -132,7 +132,7 @@ public class ScrollingActivity extends AppCompatActivity {
         });
 
 
-    }
+    }*/
     private void loadDataValoracionesSitio(final String objectId){
 
         String consulta ="{\"sitio\": { \"__type\": \"Pointer\", \"className\": \"sitio\", \"objectId\": \""+objectId+"\" } }";
@@ -146,9 +146,7 @@ public class ScrollingActivity extends AppCompatActivity {
                 Valoracion valoracion = response.body();
 
                 error = response.code();
-
-                Log.i("fallo", String.valueOf(error));
-
+                Log.i("ErrorValoracionesSitio", String.valueOf(error));
                 String cadena = String.valueOf(error);
                 String primer_numero = cadena.substring(0, 1);
                 int formateado = Integer.parseInt(primer_numero);

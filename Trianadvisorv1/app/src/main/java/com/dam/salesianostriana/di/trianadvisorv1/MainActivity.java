@@ -1,6 +1,7 @@
 package com.dam.salesianostriana.di.trianadvisorv1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Login;
+import com.squareup.okhttp.internal.Util;
 import com.squareup.picasso.Picasso;
 
 import retrofit.Call;
@@ -29,7 +32,9 @@ public class MainActivity extends AppCompatActivity
 
     ImageView avatarCabecera;
     TextView nombreCabecera;
-
+    int error;
+    String sessionToken="";
+    SharedPreferences preferencias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +46,14 @@ public class MainActivity extends AppCompatActivity
         //Recoger sessionToken obtenido del login con los extras.
 
         Bundle extras = getIntent().getExtras();
-        String sessionToken="";
+
         if(extras!=null){
            sessionToken =  extras.getString("sessionToken");
         }
 
-
+        //Se obtiene la sessionToken que hay guardada en las preferencias
+        preferencias = getSharedPreferences("preferencias", MODE_PRIVATE);
+        sessionToken = preferencias.getString("sessionToken", null);
 
         //Con dicho sessionToken hacer la consulta con el servicio "ME" al que se le debe pasar el sessionToken
 
@@ -123,8 +130,13 @@ public class MainActivity extends AppCompatActivity
             mensaje = "Mapas";
             Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_cerrar_sesion) {
-            mensaje = "Cerrar sesión";
-            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+            //loadDataCerrarSesion(sessionToken);
+            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+            //SharedPreferences.Editor editor = preferencias.edit();
+            //editor.clear();
+            //editor.apply();
+            startActivity(i);
+            this.finish();
 
         }
 
@@ -162,20 +174,45 @@ public class MainActivity extends AppCompatActivity
                         nombreCabecera.setText(login.getNombre().toString());
                         Picasso.with(MainActivity.this).load(login.getFoto().getUrl()).fit().placeholder(R.drawable.ic_usuarios).into(avatarCabecera);
 
-
                     } else {
                         Toast.makeText(MainActivity.this, "Usuario o contraseña incorrecto", Toast.LENGTH_SHORT).show();
                     }
-
                 } else {
                     Toast.makeText(MainActivity.this, "Usuario o contraseña incorrecto", Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
             public void onFailure(Throwable t) {
 
+            }
+        });
+    }
+    private void loadDataCerrarSesion (final String sessionToken ){
+        final Call<Login> logoutCall = Utiles.makeServiceWithInterceptors().cerrarSesion(sessionToken);
+        logoutCall.enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Response<Login> response, Retrofit retrofit) {
+                Login logout = response.body();
+
+                error = response.code();
+                Log.i("ErrorValoracionesSitio", String.valueOf(error));
+                String cadena = String.valueOf(error);
+                String primer_numero = cadena.substring(0, 1);
+                int formateado = Integer.parseInt(primer_numero);
+
+                if(formateado == 2){
+                    if(logout != null){
+                        Toast.makeText(MainActivity.this, "Has cerrado sesión", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(MainActivity.this, "Hemos detectado un error. Estamos trabajando para solucionarlo", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(MainActivity.this, "Error en la URL", Toast.LENGTH_SHORT).show();
             }
         });
     }

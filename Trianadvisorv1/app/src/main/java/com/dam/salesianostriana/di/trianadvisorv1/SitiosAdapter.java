@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
+import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.sitios.ResultSitio;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 public class SitiosAdapter extends RecyclerView.Adapter<SitiosAdapter.ViewHolder>{
 
     Context context;
-    private List<Result> mDataset;
+    private List<ResultSitio> mDataset;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nombre, categoria, direccion, telefono;
@@ -39,7 +40,7 @@ public class SitiosAdapter extends RecyclerView.Adapter<SitiosAdapter.ViewHolder
         }
 
     }
-    public SitiosAdapter(List<Result> myDataset) {
+    public SitiosAdapter(List<ResultSitio> myDataset) {
         mDataset = myDataset;
     }
 

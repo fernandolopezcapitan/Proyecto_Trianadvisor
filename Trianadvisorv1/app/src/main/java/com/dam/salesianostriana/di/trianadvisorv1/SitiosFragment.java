@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
-import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Sitios;
+import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.sitios.ResultSitio;
+import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.sitios.Sitio;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class SitiosFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<Result> listadoSitios;
+    private List<ResultSitio> listadoSitios;
 
     public SitiosFragment() {
         // Required empty public constructor
@@ -75,25 +75,28 @@ public class SitiosFragment extends Fragment {
     }
 
     private void loadDataSitios(){
-        final Call<Sitios> sitiosCall = makeService().obtenerSitios();
-        sitiosCall.enqueue(new Callback<Sitios>() {
+        final Call<Sitio> sitiosCall = makeService().obtenerSitios();
+        sitiosCall.enqueue(new Callback<Sitio>() {
             @Override
-            public void onResponse(Response<Sitios> response, Retrofit retrofit) {
-                Sitios result = response.body();
+            public void onResponse(Response<Sitio> response, Retrofit retrofit) {
+                Sitio result = response.body();
 
-                for(int i=0;i<result.getResults().size();i++){
-                    if(result.getResults().get(i).getNombre()!=null){
-                        listadoSitios.add(new Result(
-                                result.getResults().get(i).getObjectId(),
-                                result.getResults().get(i).getNombre(),
-                                result.getResults().get(i).getTelefono(),
-                                result.getResults().get(i).getFoto(),
-                                result.getResults().get(i).getCategoria(),
-                                result.getResults().get(i).getDireccion()));
+                if (result != null) {
+                    for (int i = 0; i < result.getResultSitioses().size(); i++) {
+                        if (result.getResultSitioses().get(i).getNombre() != null) {
+                            listadoSitios.add(new ResultSitio(
+                                    result.getResultSitioses().get(i).getObjectId(),
+                                    result.getResultSitioses().get(i).getNombre(),
+                                    result.getResultSitioses().get(i).getTelefono(),
+                                    result.getResultSitioses().get(i).getFoto(),
+                                    result.getResultSitioses().get(i).getCategoria(),
+                                    result.getResultSitioses().get(i).getDireccion()));
+                        }
+
                     }
 
+                    mRecyclerView.setAdapter(new SitiosAdapter(listadoSitios));
                 }
-                mRecyclerView.setAdapter(new SitiosAdapter(listadoSitios));
 
             }
 
