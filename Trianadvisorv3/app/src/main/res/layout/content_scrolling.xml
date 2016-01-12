@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_scrolling" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.dam.salesianostriana.di.trianadvisorv1.actitities.ScrollingActivity">
 
     <LinearLayout
@@ -63,8 +63,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/comentarios_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:minHeight="250dp"/>
+            android:layout_height="250dp"/>
 
     </LinearLayout>
 
