@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         prefs = getSharedPreferences("preferencias",MODE_PRIVATE);
         editor = prefs.edit();
 
+
         if(prefs.getString("sessionToken",null)!=null){
             i = new Intent(LoginActivity.this,MainActivity.class);
             startActivity(i);

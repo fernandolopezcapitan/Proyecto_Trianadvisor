@@ -21,7 +21,7 @@ public class GreenDao {
 
         // ¿Que ruta hay que ponerle?
         // Ejemplo: "com.jtristan.greendao.dao"
-        String ruta = "de.greenrobot.daoexample";
+        String ruta = "com.dam.salesianostriana.di.trianadvisorv1.greendao";
 
         Schema schema = new Schema(version, ruta);
         addTable(schema);
@@ -44,7 +44,6 @@ public class GreenDao {
 
         valoraciones.addIdProperty();
         valoraciones.addStringProperty("objectId");
-        valoraciones.addStringProperty("createAt");// ¿Hace falta createAt en todas las tablas?
         valoraciones.addStringProperty("updateAt");// ¿Hace falta updateAt en todas las tablas?
         valoraciones.addStringProperty("valoracion");
 
@@ -54,7 +53,6 @@ public class GreenDao {
 
         sitios.addIdProperty();
         sitios.addStringProperty("objectId");
-        sitios.addStringProperty("createAt");
         sitios.addStringProperty("updateAt");
         sitios.addStringProperty("nombre");
         sitios.addStringProperty("categoria");
@@ -71,7 +69,6 @@ public class GreenDao {
 
         usuarios.addIdProperty();
         usuarios.addStringProperty("objectId");
-        usuarios.addStringProperty("createAt");
         usuarios.addStringProperty("updateAt");
         usuarios.addStringProperty("sessionToken");
         usuarios.addStringProperty("user");
@@ -85,7 +82,6 @@ public class GreenDao {
 
         comentarios.addIdProperty();
         comentarios.addStringProperty("objectId");
-        comentarios.addStringProperty("createAt");
         comentarios.addStringProperty("updateAt");
         comentarios.addStringProperty("comentario");
 
