@@ -112,7 +112,9 @@ public class ScrollingActivity extends AppCompatActivity {
         });
     }
 
-    // Funcionalidad lista para hito 2
+    /////////////////////////////////////////
+    // FUNCIONALIDAD INTEGRADA PARA HITO 2 //
+    /////////////////////////////////////////
     private void loadDataComentarios(final String objectId){
 
         String consulta ="{\"sitio\": { \"__type\": \"Pointer\", \"className\": \"sitio\", \"objectId\": \""+objectId+"\" } }";

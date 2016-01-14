@@ -44,9 +44,27 @@ public class LoginActivity extends AppCompatActivity {
         pass = (EditText) findViewById(R.id.pass);
         register = (Button) findViewById(R.id.btn_entrar);
 
-        prefs = getSharedPreferences("preferencias",MODE_PRIVATE);
+        prefs = getSharedPreferences("preferencias", MODE_PRIVATE);
         editor = prefs.edit();
 
+
+      /*  UsuariosDao usuariosDao = Utiles.crearBD(LoginActivity.this).getUsuariosDao();
+
+        List<Usuarios> lista_gren = usuariosDao.queryBuilder().list();
+
+        for(int i = 0;i<lista_gren.size();i++){
+            lista_gren.get(i).getNombre();
+
+            ..
+            .
+            .
+            ..
+
+
+        }
+
+        recylcer.setAdapter(lista_gren);
+*/
 
         if(prefs.getString("sessionToken",null)!=null){
             i = new Intent(LoginActivity.this,MainActivity.class);
@@ -60,9 +78,11 @@ public class LoginActivity extends AppCompatActivity {
                 String usuario = user.getText().toString();
                 String passw = pass.getText().toString();
 
-//                if (checkInternet()==true) {
+
+//                if (Utiles.checkInternet(getActivity())) {
                     loadDataLogin(usuario, passw);
 //                } else {
+
 //                    checkInternet();
 //                }
 
@@ -73,12 +93,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loadDataLogin(final String user, final String password){
 
+
+
         final Call<Login> loginCall = Utiles.pedirServicioConInterceptores().obtenerLogin(user, password);
         loginCall.enqueue(new Callback<Login>() {
 
             @Override
             public void onResponse(Response<Login> response, Retrofit retrofit) {
                 Login login = response.body();
+
 
                 if (login != null) {
                     if (login.getUsername().equals(user) && password.equals("12345")) {
@@ -110,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
     // Este método pide conexión a internet para continuar la app
     // En caso de no tenerla, abre los ajustes de conexión
     // Nota: no lo usaremos porque la app soportará una base de datos sin conexión (GreenDao)
+
     private boolean checkInternet() {
         ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 

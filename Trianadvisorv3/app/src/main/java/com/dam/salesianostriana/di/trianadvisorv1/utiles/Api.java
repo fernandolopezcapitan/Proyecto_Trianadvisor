@@ -55,7 +55,7 @@ public interface Api {
     // REALIZA la devolución del listado con todos los sitios.
     // ESPERA (no espera ningún dato).
     // DEVUELVE un json con todos los datos de los sitios.
-    @GET("/1/classes/sitio")
+    @GET("/1/classes/sitio")//incluir where
     Call<Sitios> obtenerSitios();
 
     // Petición 5. Obtener los datos de un sitio concreto.
@@ -78,7 +78,7 @@ public interface Api {
     // se puede añadir como parámetro  URL-enconded include=usuario.
     // ESPERA identificador del sitio, dentro del WHERE, como parámetros URL-encoded.
     // DEVUELVE un json con todas las valoraciones de un sitio concreto.
-    @GET("/1/classes/valoracion?")
+    @GET("/1/classes/valoracion?")//where
     Call<Valoracion> obtenerValoracionesSitio(@Query(value = "where", encoded = true) String where);
 
     // Petición 11. Obtener todos los comentarios de un sitio.
@@ -87,7 +87,7 @@ public interface Api {
     // se puede añadir como parámetro  URL-enconded include=usuario.
     // ESPERA identificador del sitio, dentro del WHERE, como parámetros URL-encoded.
     // DEVUELVE devuelve un json con todas los comentario de un sitio concreto.
-    @GET("/1/classes/comentario/?&include=usuario")
+    @GET("/1/classes/comentario/?&include=usuario")//where
     Call<Comentario> obtenerComentariosSitio(@Query(value = "where", encoded = true) String json);
 
 

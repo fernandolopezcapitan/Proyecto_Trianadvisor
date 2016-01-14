@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.dam.salesianostriana.di.trianadvisorv1.R;
 import com.dam.salesianostriana.di.trianadvisorv1.adaptadores.SitiosAdapter;
+import com.dam.salesianostriana.di.trianadvisorv1.greendao.SitiosDao;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Sitios;
 import com.dam.salesianostriana.di.trianadvisorv1.utiles.Utiles;
@@ -52,11 +53,32 @@ public class SitiosFragment extends Fragment {
 
         listadoSitios = new ArrayList();
 
-        loadDataSitios();
+        SitiosDao sitiosDao = Utiles.crearBD(getContext()).getSitiosDao();
+
+        if(Utiles.checkInternet(getActivity())){
+            loadDataSitios();
+        }else{
+
+            List<com.dam.salesianostriana.di.trianadvisorv1.greendao.Sitios> lista_sitios = sitiosDao.queryBuilder().list();
+
+            List<Result> lista_recycler = new ArrayList<>();
+            for(int i = 0;i<lista_sitios.size();i++){
+
+                //lista_recycler.add(new Result(objectid,nombre));
+
+            }
+
+            mRecyclerView.setAdapter(new SitiosAdapter(lista_recycler));
+
+        }
+
+
 
         return view;
 
     }
+
+
 
 
     private void loadDataSitios(){
@@ -73,9 +95,18 @@ public class SitiosFragment extends Fragment {
                                 result.getResults().get(i).getNombre(),
                                 result.getResults().get(i).getTelefono(),
                                 result.getResults().get(i).getFoto(),
+                                //result.getResults().get(i).getCoordenadas().getLatitude(),
                                 result.getResults().get(i).getCategoria(),
                                 result.getResults().get(i).getDireccion()));
+
+
                     }
+
+                   // com.dam.salesianostriana.di.trianadvisorv1.greendao.Sitios sitio_green = null;
+
+                    //sitio_green = (new Sitio(object,nombre,telefono....));
+
+                    //sitiosDao.insert(sitio_green);
 
                 }
                 mRecyclerView.setAdapter(new SitiosAdapter(listadoSitios));

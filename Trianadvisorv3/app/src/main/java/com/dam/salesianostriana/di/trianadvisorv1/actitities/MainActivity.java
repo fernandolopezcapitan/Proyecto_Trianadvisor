@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity
         prefs = getSharedPreferences("preferencias", MODE_PRIVATE);
         sessionToken = prefs.getString("sessionToken", null);
 
+
         loadDataSessionToken(sessionToken,sessionToken);
 
 

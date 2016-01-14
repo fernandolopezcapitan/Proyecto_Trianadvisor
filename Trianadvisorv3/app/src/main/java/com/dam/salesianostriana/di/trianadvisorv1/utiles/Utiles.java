@@ -1,5 +1,12 @@
 package com.dam.salesianostriana.di.trianadvisorv1.utiles;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import com.dam.salesianostriana.di.trianadvisorv1.greendao.DaoMaster;
+import com.dam.salesianostriana.di.trianadvisorv1.greendao.DaoSession;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -67,6 +74,34 @@ public class Utiles {
         return encodedData;
     }
 
+    public static DaoSession crearBD (Context context){
+        // Lineas importantes:
+        // 1. Crea la base de datos
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "notes", null);
+        // 2. Obtenemos la base de datos
+        SQLiteDatabase db = helper.getWritableDatabase();
+        // Nos permiten conectarnos a los CRUD
+        DaoMaster daoMaster = new DaoMaster(db);
+        DaoSession daoSession = daoMaster.newSession();
 
+        return daoSession;
+    }
+
+    // Este método pide conexión a internet para continuar la app según el activity
+    // En caso de no tenerla, y si quieres que abra los ajustes de conexión, ver clase LoginActivity
+
+    public static boolean checkInternet(Context context) {
+        ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo i = conMgr.getActiveNetworkInfo();
+        if (i == null || !i.isConnected() || !i.isAvailable()) {
+
+            return false;
+
+        } else {
+
+            return true;
+        }
+    }
 
 }
