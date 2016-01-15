@@ -90,6 +90,7 @@ public interface Api {
     @GET("/1/classes/comentario/?&include=usuario")//where
     Call<Comentario> obtenerComentariosSitio(@Query(value = "where", encoded = true) String json);
 
+
     // Petición GreenDao. Obtener sitios actualizados
     // Idem Pedición 4 Obtener Sitios pero actualizados
     @GET("/1/classes/sitio?")
