@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/bares_registrados"
+            android:icon="@drawable/ic_usuarios"
+            android:title="Bares registrados" />
+
+        <item android:id="@+id/ir_de_tapas"
+            android:icon="@drawable/ic_mapas"
+            android:title="Ir de tapas" />
+
+    </group>
+
+    <item android:title="Mi perfil">
+        <menu>
+            <item android:id="@+id/nav_cerrar_sesion"
+                android:icon="@drawable/ic_cerrarsesion"
+                android:title="Cerrar sesión" />
+
+        </menu>
+    </item>
+
+</menu>

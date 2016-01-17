@@ -34,7 +34,6 @@ import retrofit.Retrofit;
 public class SitiosFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Result> listadoSitios;
     List<com.dam.salesianostriana.di.trianadvisorv1.greendao.Sitios> lista_dao;
@@ -112,12 +111,13 @@ public class SitiosFragment extends Fragment {
             public void onResponse(Response<Sitios> response, Retrofit retrofit) {
                 Sitios result = response.body();
 
+                List<Result> lista = new ArrayList<Result>();
                 lista_dao = new ArrayList<com.dam.salesianostriana.di.trianadvisorv1.greendao.Sitios>();
 
-                if (result!=null){
+                if (result!=null) {
 
-                    for(int i=0;i<result.getResults().size();i++){
-                        if(result.getResults().get(i).getNombre()!=null){
+                    for (int i = 0; i < result.getResults().size(); i++) {
+                        if (result.getResults().get(i).getNombre() != null) {
 
                             String objectId, nombre, tlf, categoria, direccion, descripcion, lat, longitud, fotoUrl, updateAt;
                             Foto foto;
@@ -135,44 +135,45 @@ public class SitiosFragment extends Fragment {
                             fotoUrl = result.getResults().get(i).getFoto().getUrl();
                             updateAt = result.getResults().get(i).getUpdatedAt();
 
-                            listadoSitios.add(new Result(objectId,nombre,tlf,foto,categoria,direccion));
-                            lista_dao.add(new com.dam.salesianostriana.di.trianadvisorv1.greendao.Sitios(objectId,updateAt,nombre,categoria,direccion,tlf,descripcion,fotoUrl,lat,longitud));
+                            lista.add(new Result(objectId, nombre, tlf, foto, categoria, direccion));
+                            //listadoSitios.add(new Result(objectId,nombre,tlf,foto,categoria,direccion));
+                            lista_dao.add(new com.dam.salesianostriana.di.trianadvisorv1.greendao.Sitios(objectId, updateAt, nombre, categoria, direccion, tlf, descripcion, fotoUrl, lat, longitud));
 
                         }
 
                     }
                     //mRecyclerView.setAdapter(new SitiosAdapter(listadoSitios));
+                    //Si existe lo reemplaza y si no lo crea
+                    for (int i = 0; i < lista_dao.size(); i++) {
+                        sitioDao.insertOrReplaceInTx(lista_dao.get(i));
+                    }
+
+
+                    List<Result> lista_final = new ArrayList<>();
+                    List<com.dam.salesianostriana.di.trianadvisorv1.greendao.Sitios> lista_dao_final = sitioDao.queryBuilder().list();
+
+                    for (int i = 0; i < lista_dao_final.size(); i++) {
+
+                        String objectId, nombre, tlf, categoria, foto_Url, direccion;
+
+                        objectId = lista_dao_final.get(i).getObjectId();
+                        nombre = lista_dao_final.get(i).getNombre();
+                        tlf = lista_dao_final.get(i).getTlf();
+                        foto_Url = lista_dao_final.get(i).getFotoUrl();
+                        categoria = lista_dao_final.get(i).getCategoria();
+                        direccion = lista_dao_final.get(i).getDireccion();
+
+
+                        lista_final.add(new Result(objectId, nombre, tlf, foto_Url, categoria, direccion));
+
+                    }
+
+                    editor.putString("fecha_sitios", Utiles.obtenerFechaSistema());
+                    editor.apply();
+
+                    mRecyclerView.setAdapter(new SitiosAdapter(lista_final));
+
                 }
-
-                //Si existe lo reemplaza y si no lo crea
-                for (int i = 0; i < lista_dao.size(); i++){
-                    sitioDao.insertOrReplaceInTx(lista_dao.get(i));
-                }
-
-                List<Result> lista_final = new ArrayList<>();
-                List<com.dam.salesianostriana.di.trianadvisorv1.greendao.Sitios> lista_dao_final = sitioDao.queryBuilder().list();
-
-                for(int i = 0;i<lista_dao_final.size();i++){
-
-                    String objectId, nombre, tlf, categoria, foto_Url, direccion;
-
-                    objectId = lista_dao_final.get(i).getObjectId();
-                    nombre = lista_dao_final.get(i).getNombre();
-                    tlf = lista_dao_final.get(i).getTlf();
-                    foto_Url = lista_dao_final.get(i).getFotoUrl();
-                    categoria = lista_dao_final.get(i).getCategoria();
-                    direccion = lista_dao_final.get(i).getDireccion();
-
-
-                    lista_final.add(new Result(objectId,nombre,tlf,foto_Url,categoria,direccion));
-
-                }
-
-                editor.putString("fecha_sitios", Utiles.obtenerFechaSistema());
-                editor.apply();
-
-                mRecyclerView.setAdapter(new SitiosAdapter(lista_final));
-
 
             }
 

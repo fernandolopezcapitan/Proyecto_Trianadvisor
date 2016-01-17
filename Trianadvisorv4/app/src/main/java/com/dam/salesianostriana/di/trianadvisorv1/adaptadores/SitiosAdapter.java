@@ -2,6 +2,7 @@ package com.dam.salesianostriana.di.trianadvisorv1.adaptadores;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,11 @@ import android.widget.TextView;
 
 import com.dam.salesianostriana.di.trianadvisorv1.R;
 import com.dam.salesianostriana.di.trianadvisorv1.actitities.ScrollingActivity;
+import com.dam.salesianostriana.di.trianadvisorv1.greendao.Sitios;
+import com.dam.salesianostriana.di.trianadvisorv1.greendao.SitiosDao;
+import com.dam.salesianostriana.di.trianadvisorv1.greendao.ValoracionesDao;
 import com.dam.salesianostriana.di.trianadvisorv1.pojoschema.Result;
+import com.dam.salesianostriana.di.trianadvisorv1.utiles.Utiles;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -56,11 +61,23 @@ public class SitiosAdapter extends RecyclerView.Adapter<SitiosAdapter.ViewHolder
     @Override
     public void onBindViewHolder(SitiosAdapter.ViewHolder holder, final int position) {
 
+        // GREENDAO (HITO 2)
+        final ValoracionesDao valoracionesDao = Utiles.makeDataBase(context).getValoracionesDao();
+        final SitiosDao sitiosDao = Utiles.makeDataBase(context).getSitiosDao();
+
+        SharedPreferences preferences = context.getSharedPreferences("preferencias", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = preferences.edit();
+
+        final String obj_id = mDataset.get(position).getObjectId();
+        String json_desde_fecha = "{\"sitio\":{ \"__type\":\"Pointer\", \"className\":\"sitio\", \"objectId\":\""+obj_id+"\"},\"updatedAt\":{\"$gt\":{\"__type\":\"Date\",\"iso\":\""+preferences.getString("fecha_valoraciones",null)+"\"}}}";
+        final Sitios sitios = sitiosDao.queryBuilder().where(SitiosDao.Properties.ObjectId.eq(obj_id)).unique();
+
+
         holder.nombre.setText(mDataset.get(position).getNombre());
         holder.categoria.setText(mDataset.get(position).getCategoria());
         holder.direccion.setText(mDataset.get(position).getDireccion());
         holder.telefono.setText(mDataset.get(position).getTelefono());
-        Picasso.with(context).load(mDataset.get(position).getFoto().getUrl()).fit().placeholder(R.drawable.logoconletra)
+        Picasso.with(context).load(mDataset.get(position).getUrl_foto()).fit().placeholder(R.drawable.logoconletra)
                .into(holder.foto);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
