@@ -109,8 +109,8 @@ public class SitiosFragment extends Fragment {
         sitiosCallAc.enqueue(new Callback<Sitios>() {
             @Override
             public void onResponse(Response<Sitios> response, Retrofit retrofit) {
-                Sitios result = response.body();
 
+                Sitios result = response.body();
                 List<Result> lista = new ArrayList<Result>();
                 lista_dao = new ArrayList<com.dam.salesianostriana.di.trianadvisorv1.greendao.Sitios>();
 
